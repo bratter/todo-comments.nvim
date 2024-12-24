@@ -50,6 +50,9 @@ local defaults = {
     pattern = [[.*<(KEYWORDS)\s*:]], -- pattern or table of patterns, used for highlightng (vim regex)
     -- pattern = { [[.*<(KEYWORDS)\s*:]], [[.*\@(KEYWORDS)\s*]] }, -- pattern used for highlightng (vim regex)
     comments_only = true, -- uses treesitter to match keywords in comments only
+    -- HACK: Added config option to account for ignoring the comments_only
+    -- setting for text-based files
+    comments_except_ft = { "markdown" }, -- list of filetypes to ignore the above comments only config
     max_line_len = 400, -- ignore lines longer than this
     exclude = {}, -- list of file types to exclude highlighting
     throttle = 200,

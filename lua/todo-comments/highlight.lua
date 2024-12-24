@@ -57,6 +57,14 @@ end
 -- This method returns nil if this buf doesn't have a treesitter parser
 --- @return boolean? true or false otherwise
 function M.is_comment(buf, row, col)
+  -- HACK: Ignore the comments only directive for a set of filetypes
+  -- Meant to capture markdown and other text-based formats that don't
+  -- have comments
+  local ft = vim.bo[buf].filetype
+  local ignore_comments_ft = Config.options.highlight.comments_except_ft
+  if vim.tbl_contains(ignore_comments_ft, ft) then
+    return true
+  end
   if vim.treesitter.highlighter.active[buf] then
     local captures = vim.treesitter.get_captures_at_pos(buf, row, col)
     for _, c in ipairs(captures) do
